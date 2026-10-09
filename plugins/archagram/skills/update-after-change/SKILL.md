@@ -12,7 +12,7 @@ Tools used: `list_projects`, `read_project_context`, `read_notation`, `apply_not
 
 ## 1. Find the change
 
-- With a shell, as in Claude Code, run `git status` and `git diff` for staged and unstaged changes. When the user names a range, use it instead, for example `git diff main...HEAD`, or `git show` for the last commit.
+- With a shell, as in Claude Code, run `git status` and `git diff HEAD` for staged and unstaged changes, and read the new files `git status` lists as untracked, since the diff leaves them out. When the user names a range, use it instead, for example `git diff main...HEAD`, or `git show` for the last commit.
 - Without a shell, ask the user to paste the diff or describe the change.
 
 ## 2. Find the project

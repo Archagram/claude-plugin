@@ -19,7 +19,7 @@ Call `read_project_context`, then `get_project_stats` for existing targets, phas
 
 ## 3. Draft the target
 
-1. **The delta**: the components the target adds, changes and removes, with descriptions. Refer to baseline components by their existing ids.
+1. **The delta**: the components and relationships the target adds, changes and removes. Refer to baseline components by their existing ids, and explain the delta in a document linked from the target.
 2. **Phases**: a few delivery stages, each with a timeline label, a one-sentence focus a non-technical reader understands, what it includes and what it brings.
 3. **Work packages**: one per deliverable piece of work, each with a title, the components it acts on, its phase, a size, a work type and the domain that owns it. Split a large package into sub-items.
 4. **Dependencies**: an empty `after` list starts a path, predecessors order the work, and several predecessors join paths.

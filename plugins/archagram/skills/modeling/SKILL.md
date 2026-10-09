@@ -25,7 +25,7 @@ For an existing project:
 
 ## Model it well
 
-- **Components** are the parts a team builds, runs or depends on: applications, services, functions, databases, queues, caches, external systems, and the people who use them. Give each the icon type in brackets that fits best; the reference example and existing projects show common types. An unknown type is a validation warning, and the server picks a close one.
+- **Components** are the parts a team builds, runs or depends on: applications, services, functions, databases, queues, caches, external systems, and the people who use them. Give each the icon type in brackets that fits best; the reference example and existing projects show common types. An unknown type is a validation warning, and the server then guesses an icon from the id and label, falling back to a plain box, so try another common type or leave the choice to the user in the editor.
 - **Ids** are short lowercase kebab-case words derived from the name, such as `orders-api`. Keep an id once it exists: positions, links and documents hang on it. To rename something, change its label.
 - **Labels** use the name people say out loud. Add a one-sentence `description` of what the component is responsible for, and put facts such as owner, repository path or runtime in its `data` block.
 - **Boundaries** group components that share an owner, a domain, a deployment or a trust zone. When parts belong inside one component, such as the modules of a service, nest them in that component's block instead, which gives it a drill-in level.
