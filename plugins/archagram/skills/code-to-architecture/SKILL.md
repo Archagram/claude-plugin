@@ -33,7 +33,7 @@ With file access, as in Claude Code, list the directories first and open only th
 - Relationships come from evidence: a client pointed at another service, a connection string, a producer or consumer of a topic. Label each with its protocol or purpose.
 - Libraries, shared modules, tests and build tooling stay out of the top level. The modules of one service can go one level down, inside that service's block, when they matter to a reader.
 
-Aim for 5 to 20 top-level components. Record where each one lives in its `data` block, for example `repo: services/orders`.
+Aim for about 5 to 15 components per level; a larger system gets boundaries and drill-in levels. Record where each component lives in its `data` block, for example `repo: services/orders`.
 
 ## 3. Check for an existing project
 
@@ -42,7 +42,7 @@ Call `list_projects`. If a project already covers this repository, ask whether t
 ## 4. Write and create
 
 1. Call `get_notation_reference`, then draft the full notation: a title, boundaries, components with descriptions, and relationships.
-2. Run `validate_notation` and fix the errors and warnings until it passes cleanly.
+2. Run `validate_notation`, then fix the errors and the warnings that point at a mistake, as the modeling skill describes.
 3. If `list_contexts` shows guidance that fits, ask whether to select it.
 4. Call `create_project` with the name, the notation and any chosen `contexts`.
 5. Offer to write `docs/overview.md` with `write_file`: a short description of the system and how to read the diagram, linked from the component it describes best.

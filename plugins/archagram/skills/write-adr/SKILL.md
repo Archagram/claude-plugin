@@ -24,7 +24,7 @@ From the conversation, or by asking, collect: the decision, its context and the 
 1. Call `list_artifact_templates` with `kind: "adr"` and pick a template: the standard one for a choice between options, the lightweight one for a narrow, reversible decision, or the one for superseding an earlier ADR. `get_artifact_template` returns its body.
 2. Number the ADR one above the highest existing number, padded to four digits: the third ADR is `ADR-0003`, stored at `docs/adr/0003.md`.
 3. Fill the template's `{{...}}` placeholders (the ADR label, the title and today's date as YYYY-MM-DD) and write each section from what the user gave you.
-4. Start the file with the front matter the Archagram editor reads, then a blank line and the record:
+4. Start the file with the front matter the Archagram editor reads, carrying the ADR's status, then a blank line and the record:
 
    ```markdown
    ---

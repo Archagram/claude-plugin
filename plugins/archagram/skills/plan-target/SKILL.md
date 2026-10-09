@@ -5,7 +5,7 @@ description: Plan a target architecture in Archagram, a future state written as 
 
 # Plan a target architecture and its roadmap
 
-In Archagram a target is a future state written as a delta over the current architecture, the baseline: the components it adds, changes and removes, with its own documents, pros and cons, views and sequences. Its plan is the roadmap: work packages grouped into phases and ordered by their dependencies. The modeling skill covers the notation conventions and the safe way to write.
+In Archagram a target is a future state written as a delta over the current architecture, the baseline: the components and relationships it adds, changes and removes, with its own documents, pros and cons, views and sequences. Its plan is the roadmap: work packages grouped into phases and ordered by their dependencies. The modeling skill covers the notation conventions and the safe way to write.
 
 Tools used: `list_projects`, `read_project_context`, `get_project_stats`, `read_notation`, `get_notation_reference`, `validate_notation`, `apply_notation_edits`, `apply_notation`.
 
