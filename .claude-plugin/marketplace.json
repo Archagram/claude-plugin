@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "archagram",
+  "description": "Archagram's plugin for Claude: model, diagram and explain software architecture in your Archagram workspace.",
+  "owner": {
+    "name": "Yasin Karpuz",
+    "email": "support@archagram.com",
+    "url": "https://archagram.com"
+  },
+  "plugins": [
+    {
+      "name": "archagram",
+      "source": "./plugins/archagram",
+      "description": "Connect Claude to your Archagram workspace: diagram a repository, keep the diagram in step with code changes, explain an architecture, write ADRs and plan target architectures.",
+      "category": "development",
+      "tags": ["architecture", "diagrams", "adr", "roadmap", "mcp"]
+    }
+  ]
+}

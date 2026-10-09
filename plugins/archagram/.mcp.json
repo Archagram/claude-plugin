@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "archagram": {
+      "type": "http",
+      "url": "https://mcp.archagram.com/mcp"
+    }
+  }
+}

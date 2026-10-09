@@ -1,0 +1,20 @@
+{
+  "name": "archagram",
+  "displayName": "Archagram",
+  "version": "0.1.0",
+  "description": "Connect Claude to your Archagram workspace and model software architecture there: diagram a repository, update the diagram after a code change, explain an architecture to a newcomer, write architecture decision records and plan target architectures with their roadmaps.",
+  "author": {
+    "name": "Yasin Karpuz",
+    "email": "support@archagram.com",
+    "url": "https://archagram.com"
+  },
+  "homepage": "https://archagram.com",
+  "repository": "https://github.com/Archagram/claude-plugin",
+  "license": "MIT",
+  "keywords": ["architecture", "software-architecture", "diagrams", "adr", "roadmap", "mcp"],
+  "icon": "./assets/icon.png",
+  "documentationUrl": "https://archagram.com/docs/claude",
+  "supportUrl": "https://archagram.com/docs/claude",
+  "privacyPolicyUrl": "https://archagram.com/legal/privacy",
+  "termsOfServiceUrl": "https://archagram.com/legal/terms"
+}
