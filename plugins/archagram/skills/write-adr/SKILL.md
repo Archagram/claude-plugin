@@ -8,7 +8,7 @@ user-invocable: false
 
 In Archagram an ADR has two parts: an `adr` entry in the project's notation (title, status, scope and the components it concerns) and one Markdown document under `docs/adr/` that holds the record itself. The modeling skill covers the safe way to write.
 
-Tools used: `list_projects`, `read_project_context`, `read_notation`, `list_artifact_templates`, `get_artifact_template`, `write_file`, `apply_notation_edits`, `get_notation_reference`.
+Tools used: `list_projects`, `read_project_context`, `get_project_stats`, `read_notation`, `list_artifact_templates`, `get_artifact_template`, `write_file`, `apply_notation_edits`, `get_notation_reference`.
 
 ## 1. Gather the decision
 
@@ -17,7 +17,8 @@ From the conversation, or by asking, collect: the decision, its context and the 
 ## 2. Read the project
 
 1. `read_project_context` for the team's conventions.
-2. `read_notation` with `sections: ["adrs"]` for the existing ADRs and their numbers, and with `["structure"]`, or `["targets"]` for a decision about a future state, to find the ids of the components involved. Keep the `base_hash`.
+2. For a decision about a future state, `get_project_stats`: its `targets` list gives the target's `id`, which the notation doesn't show.
+3. `read_notation` with `sections: ["adrs", "structure"]` for the existing ADRs with their numbers and the ids of the components involved, plus `"targets"` when the decision concerns components a target adds. Keep the `base_hash`.
 
 ## 3. Write the document
 
@@ -37,7 +38,7 @@ From the conversation, or by asking, collect: the decision, its context and the 
 
 ## 4. Register it in the notation
 
-Add an `adr` entry with one `apply_notation_edits` call, in the form `get_notation_reference` shows: an id in kebab-case from the title, the title, the same status as the front matter, `scope` set to `baseline` or to the id of the target the decision belongs to, the components it concerns, and its document, `@adr/0003.md` in the example above.
+Add an `adr` entry with one `apply_notation_edits` call, in the form `get_notation_reference` shows: an id in kebab-case from the title, the title, the same status as the front matter, `scope` set to `baseline` or to the target `id` from `get_project_stats`, the components it concerns, and its document, `@adr/0003.md` in the example above.
 
 ## 5. Report
 
