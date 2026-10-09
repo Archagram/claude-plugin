@@ -22,7 +22,9 @@ Use the project the user names. Otherwise call `list_projects` and pick the one 
 ## 3. Read before editing
 
 1. `read_project_context` for the team's conventions.
-2. `read_notation` for the current text and its `base_hash`. When the change only touches components and relationships, `sections: ["structure"]` is enough; its `base_hash` is the same one a full read returns.
+2. `read_notation` for the current text and its `base_hash`:
+   - When the change removes a component or changes an id, read the full text, without `sections`. Views, sequences, targets, processes and ADRs refer to components by id, and a sectioned read leaves them out.
+   - Otherwise `sections: ["structure", "targets"]` is enough: the structure to edit, and the targets to see whether the change completes a work package. Its `base_hash` is the same one a full read returns.
 
 ## 4. Decide what is architectural
 
@@ -41,8 +43,8 @@ Skip refactors inside one component, tests, styling, dependency bumps and config
 Build the smallest set of find/replace pairs, each `old` copied exactly from the text you read:
 
 - Add a component or a relationship next to related lines, anchored on a line that occurs once.
-- Rename by changing the label and keep the id, unless the user asks for a new id.
-- Remove a component together with every relationship and reference to it in the same call. A reference left behind keeps the component alive, and the response warns that its id "is never declared".
+- Rename by changing the label and keep the id. If the user asks for a new id, change it on every line of the full text that names it.
+- Remove a component together with every line of the full text that names its id, in the same call: its relationships and its references in views, sequences, targets, processes and ADRs. A reference left behind can bring the component back, with a warning that its id "is never declared", or make the server refuse the call. After a removal, treat that warning as a leftover reference and remove it with a follow-up edit on the returned `base_hash`.
 - Update a `description` or a `data` entry that the change made wrong.
 
 Send all pairs in one `apply_notation_edits` call with the `base_hash`. Check the warnings it returns. If it reports a stale `base_hash`, read again and rebuild the edits once on the new text. If the change clearly completes a work package in one of the project's targets, ask whether to mark it done.
