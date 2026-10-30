@@ -32,6 +32,7 @@ For an existing project:
 - **Relationships** follow the call or the data flow, one per real dependency, labeled with what flows or how: "places order", "HTTPS", "publishes OrderPlaced". Keep one direction convention within a project.
 - **Views** are extra layouts of the same model for one audience or concern, such as deployment. A view refers to existing components and boundaries by id and never declares them a second time.
 - **Documents** hold the longer story. Write Markdown under `docs/` with `write_file` and link it from the element's `docs` list instead of writing long descriptions.
+- **Journeys** tell how the architecture delivers one outcome, step by step on its own components, with the payload each handoff carries. To draft one from code, follow the draft-journey skill.
 - **Level of detail**: about 5 to 15 elements per level reads well. Move detail into drill-in levels or a separate view.
 - Keep secrets, credentials and personal data out of notation and documents.
 
