@@ -21,7 +21,7 @@ For an existing project:
 1. `list_projects` gives the project id.
 2. `read_project_context` returns the context documents the team selected for the project, such as naming and grouping conventions. Apply those conventions to what you add or change, and point out where a request conflicts with one.
 3. `get_project_stats` gives counts, view names and targets without reading the notation.
-4. `read_notation` returns the text and its `base_hash`. Pass `sections`, for example `["structure"]` or `["targets"]`, to read one area of a large project.
+4. `read_notation` returns the root notation file and its `base_hash`: the title, context and structure, plus one `include @<path>.ysk` line for each other notation file (one per target, roadmap, sequence, process, journey, presentation and view, and `decisions.ysk`, `building-blocks.ysk`, `policies.ysk` and `stakeholders.ysk`). `files` lists every file with its size. Pass `file` to read one of them, `full: true` for the whole notation as one text, or `sections`, for example `["structure"]` or `["targets"]`, to read one area. Every read returns the same `base_hash`.
 
 ## Model it well
 
@@ -39,9 +39,10 @@ For an existing project:
 ## Write changes safely
 
 - **New project**: write the full notation and run `validate_notation`. Fix every error, and every warning that points at a mistake: an id that "is never declared" becomes a new component with a guessed icon. If `list_contexts` shows guidance that fits the project, ask the user whether to select it. Then call `create_project` with `name`, `notation` and any chosen `contexts`.
-- **Small change**: call `apply_notation_edits` with the `base_hash` from your last read and exact find/replace pairs copied from the current text. Each `old` has to match exactly once unless `all` is true. To add a new block, anchor an edit on a line that occurs once, such as the `title:` line, and repeat that line in `new` followed by the block. The response returns the next `base_hash`, so further edits chain without another read.
-- **Removals and id changes**: read the full text first. Views, sequences, targets, processes and ADRs refer to elements by id, and a sectioned read leaves them out. Remove or change every line that names the id in the same call.
-- **Large rewrite**: read the full text with `read_notation` and no `sections`, edit it, run `validate_notation` with `project_id`, then call `apply_notation` with the full text and that read's `base_hash`. Text from a sectioned read never goes to `apply_notation`: it replaces the whole structure and would drop the sections the read left out.
+- **Small change**: call `apply_notation_edits` with the `base_hash` from your last read and exact find/replace pairs copied from the current text. Each `old` has to match exactly once unless `all` is true. To add a new block, anchor an edit on a line that occurs once, such as the `title:` line, and repeat that line in `new` followed by the block. Pass `file` when the text came from a file read, so the edits anchor in that file; without it they anchor in the whole notation. The response returns the next `base_hash`, so further edits chain without another read.
+- **Removals and id changes**: read the full text first, with `full: true`. Views, sequences, targets, processes and ADRs refer to elements by id, and the root file, one file or a sectioned read leaves them out. Remove or change every line that names the id in the same call.
+- **Large rewrite**: read the full text with `read_notation` and `full: true`, edit it, run `validate_notation` with `project_id`, then call `apply_notation` with the full text and that read's `base_hash`. Text from a sectioned read never goes to `apply_notation`: it replaces the whole structure and would drop the sections the read left out.
+- **One file**: to rework one block, such as a target's roadmap, read its file with `file`, edit it, and pass the same `file` to `validate_notation` and `apply_notation`. Every other file keeps what the project holds, and an emptied file removes what it held. The root with its include lines can be applied the same way.
 - **Refusals**: a stale `base_hash` means the project was saved after your read, in the editor or by another session, and nothing was written. Read again and redo the change on the new text. Parse errors come with line numbers; after three failed attempts, stop and show the user the errors.
 - After a write, check the warnings in the response, then tell the user in a few lines what changed. The change shows up in the Archagram editor within seconds.
 

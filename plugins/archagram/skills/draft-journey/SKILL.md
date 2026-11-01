@@ -77,7 +77,7 @@ Keep the story to about 5 to 15 activities, one step per handoff a reader cares 
 
 ## 7. Validate, apply and read back
 
-1. Read the full text with `read_notation` and no `sections`, add the journey to it, and run `validate_notation` with `project_id`. Fix every error, and the warnings that point at a mistake: a task on a component that does not exist, a reply without `(request-reply)`, `delivers` or `mapping` without a payload or a `(map)` or `(convert)` action, and a handoff between components the architecture does not connect, which usually means a missing relationship or a skipped step.
+1. Read the full text with `read_notation` and `full: true`, add the journey to it, and run `validate_notation` with `project_id`. Fix every error, and the warnings that point at a mistake: a task on a component that does not exist, a reply without `(request-reply)`, `delivers` or `mapping` without a payload or a `(map)` or `(convert)` action, and a handoff between components the architecture does not connect, which usually means a missing relationship or a skipped step.
 2. Add the journey with one `apply_notation_edits` call and the `base_hash` from that read, anchored on a line that occurs once; a journey over a target is anchored on its target's header line. To rework an existing journey heavily, call `apply_notation` with the full text and that read's `base_hash`, as the modeling skill describes.
 3. Read it back with `read_notation` and `sections: ["processes"]`, and check with `list_files` that every payload and mapping the journey names exists.
 

@@ -15,7 +15,7 @@ Tools used: `list_projects`, `read_project_context`, `get_project_stats`, `read_
 1. `list_projects` to find the project; ask when the name matches more than one.
 2. `read_project_context` for the team's vocabulary and conventions.
 3. `get_project_stats` for the size, the views and the targets.
-4. `read_notation` with `sections: ["structure"]`, then the sections the question needs: `sequences` for flows, `targets` for plans and roadmaps, `adrs` for decisions. Read the full text only for a small project or a question about the whole system.
+4. `read_notation` with `sections: ["structure"]`, then the sections the question needs: `sequences` for flows, `targets` for plans and roadmaps, `adrs` for decisions. Read the full text, with `full: true`, only for a small project or a question about the whole system.
 5. `read_links` with an `object_id` for the documents attached to a central component, and `read_file` for the documents that answer the question.
 
 ## 2. Explain
