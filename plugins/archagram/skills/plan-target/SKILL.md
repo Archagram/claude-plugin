@@ -32,7 +32,7 @@ Show the user the draft in plain words (phases, main packages, open decisions) b
 ## 4. Write it
 
 - Usually add the target block with one `apply_notation_edits` call, anchored on a line that occurs once and using the `base_hash` from your read. The server parses the result and refuses it with line-numbered errors when something is wrong, leaving the project untouched. Read the warnings it returns: an id that "is never declared" usually means a typo in a component reference.
-- To rework an existing target heavily, read the full text, edit it, run `validate_notation` with `project_id`, and call `apply_notation` with the full text and that read's `base_hash`.
+- To rework an existing target heavily, work on its files. A default `read_notation` lists them in `files`: `targets/<id>.ysk` holds the target's changes and `roadmaps/<id>.ysk` its remarks, phases, workstreams and plan, both as a `target "<Name>" { }` block with the same name. Read one with `file`, edit it, run `validate_notation` with `project_id` and that `file`, and call `apply_notation` with the same `file`, the edited text and that read's `base_hash`. To rename the target, use `apply_notation_edits` without `file`, which anchors in the whole notation, where the target has one header; a name changed in only one of its two files is refused.
 - For a large plan in Claude Code or Cowork, the plugin's operator agent can run the validate and apply loop.
 
 ## 5. Report

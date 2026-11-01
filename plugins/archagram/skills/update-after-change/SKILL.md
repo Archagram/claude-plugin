@@ -23,7 +23,7 @@ Use the project the user names. Otherwise call `list_projects` and pick the one 
 
 1. `read_project_context` for the team's conventions.
 2. `read_notation` for the current text and its `base_hash`:
-   - When the change removes a component or changes an id, read the full text, without `sections`. Views, sequences, targets, processes and ADRs refer to components by id, and a sectioned read leaves them out.
+   - When the change removes a component or changes an id, read the full text with `full: true`. Views, sequences, targets, processes and ADRs refer to components by id, and a sectioned read leaves them out.
    - Otherwise `sections: ["structure", "targets"]` is enough: the structure to edit, and the targets to see whether the change completes a work package. Its `base_hash` is the same one a full read returns.
 
 ## 4. Decide what is architectural

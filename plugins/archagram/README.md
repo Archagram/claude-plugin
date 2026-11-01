@@ -89,7 +89,7 @@ Email support@archagram.com. Say which app you use (Claude Code, claude.ai, the 
 
 ## Version history
 
-- **0.2.0** (unreleased): drafting journeys from code, with the draft-journey skill and `/archagram:journey`. Follows the Archagram MCP server 0.11.0 and the journey notation of schema v59. Details in CHANGELOG.md.
+- **0.2.0** (unreleased): drafting journeys from code, with the draft-journey skill and `/archagram:journey`, and notation files: the skills follow include lines and read the whole text with `full: true` where they need it. Follows the Archagram MCP server 0.12.0 and the journey notation of schema v59. Details in CHANGELOG.md.
 - **0.1.0** (2026-10-09): first release. Follows the Archagram MCP server 0.11.0: 27 tools, with `base_hash` required on whole-document writes. Details in CHANGELOG.md.
 
 ## License
