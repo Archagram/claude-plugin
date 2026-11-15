@@ -12,7 +12,9 @@ Tools used: `get_notation_reference`, `list_projects`, `list_contexts`, `read_pr
 
 ## Get the grammar from the server
 
-Call `get_notation_reference` before writing notation, and follow the grammar and the complete example it returns. The grammar evolves, so use it rather than memory or older projects. Thinking sessions, the idea boards kept beside a project, have their own grammar: call it with `topic: "thinking"`.
+Call `get_notation_reference` before writing notation, and follow the grammar and the complete example it returns. The grammar evolves, so use it rather than memory or older projects. The documents kept beside a project have their own grammar and their own tools: call it with `topic: "thinking"` for thinking sessions, the idea boards, `"screens"` for the screens of a journey, `"investigation"` for investigations, `"datamodel"` for data models and `"enterprise"` for enterprise landscapes.
+
+Where the connector offers `list_guides` and `get_guide`, a guide says which tools to call in which order for one job, such as a journey, its screens or a data model. Read the one that fits the task; the grammar stays in `get_notation_reference`.
 
 ## Start from what the project already says
 
@@ -21,7 +23,7 @@ For an existing project:
 1. `list_projects` gives the project id.
 2. `read_project_context` returns the context documents the team selected for the project, such as naming and grouping conventions. Apply those conventions to what you add or change, and point out where a request conflicts with one.
 3. `get_project_stats` gives counts, view names and targets without reading the notation.
-4. `read_notation` returns the root notation file and its `base_hash`: the title, context and structure, plus one `include @<path>.ysk` line for each other notation file (one per target, roadmap, sequence, process, journey, presentation and view, and `decisions.ysk`, `building-blocks.ysk`, `policies.ysk` and `stakeholders.ysk`). `files` lists every file with its size. Pass `file` to read one of them, `full: true` for the whole notation as one text, or `sections`, for example `["structure"]` or `["targets"]`, to read one area. Every read returns the same `base_hash`.
+4. `read_notation` returns the root notation file and its `base_hash`: the title, context and structure, plus one `include @<path>.ysk` line for each other notation file (one per target, roadmap, sequence, process, journey, presentation and view, and `decisions.ysk`, `building-blocks.ysk`, `policies.ysk` and `stakeholders.ysk`). `files` lists every file with its size. Pass `file` to read one of them, `full: true` for the whole notation as one text, or `sections`, for example `["structure"]` or `["targets"]`, to read one area. Every read returns the same `base_hash`, and each entry in `files` carries that file's own `hash`.
 
 ## Model it well
 
@@ -33,17 +35,18 @@ For an existing project:
 - **Views** are extra layouts of the same model for one audience or concern, such as deployment. A view refers to existing components and boundaries by id and never declares them a second time.
 - **Documents** hold the longer story. Write Markdown under `docs/` with `write_file` and link it from the element's `docs` list instead of writing long descriptions.
 - **Journeys** tell how the architecture delivers one outcome, step by step on its own components, with the payload each handoff carries. To draft one from code, follow the draft-journey skill.
+- **Screens, investigations and data models** are kept beside the notation, each with its own tools: the screens a person sees along a journey (the journey-screens skill), what a running system was observed to do (the record-investigation skill), and the tables of a database or the concepts of a domain (the write-data-model skill).
 - **Level of detail**: about 5 to 15 elements per level reads well. Move detail into drill-in levels or a separate view.
 - Keep secrets, credentials and personal data out of notation and documents.
 
 ## Write changes safely
 
 - **New project**: write the full notation and run `validate_notation`. Fix every error, and every warning that points at a mistake: an id that "is never declared" becomes a new component with a guessed icon. If `list_contexts` shows guidance that fits the project, ask the user whether to select it. Then call `create_project` with `name`, `notation` and any chosen `contexts`.
-- **Small change**: call `apply_notation_edits` with the `base_hash` from your last read and exact find/replace pairs copied from the current text. Each `old` has to match exactly once unless `all` is true. To add a new block, anchor an edit on a line that occurs once, such as the `title:` line, and repeat that line in `new` followed by the block. Pass `file` when the text came from a file read, so the edits anchor in that file; without it they anchor in the whole notation. The response returns the next `base_hash`, so further edits chain without another read.
+- **Small change**: call `apply_notation_edits` with the `base_hash` from your last read and exact find/replace pairs copied from the current text. Each `old` has to match exactly once unless `all` is true. To add a new block, anchor an edit on a line that occurs once, such as the `title:` line, and repeat that line in `new` followed by the block. Pass `file` when the text came from a file read, so the edits anchor in that file; without it they anchor in the whole notation. The response returns the next `base_hash`, so further edits chain without another read. With `file`, that file's `hash` works as the `base_hash` too: then only a change to that file refuses the edits, and the response returns its new `file_hash` for the next ones.
 - **Removals and id changes**: read the full text first, with `full: true`. Views, sequences, targets, processes and ADRs refer to elements by id, and the root file, one file or a sectioned read leaves them out. Remove or change every line that names the id in the same call.
 - **Large rewrite**: read the full text with `read_notation` and `full: true`, edit it, run `validate_notation` with `project_id`, then call `apply_notation` with the full text and that read's `base_hash`. Text from a sectioned read never goes to `apply_notation`: it replaces the whole structure and would drop the sections the read left out.
-- **One file**: to rework one block, such as a target's roadmap, read its file with `file`, edit it, and pass the same `file` to `validate_notation` and `apply_notation`. Every other file keeps what the project holds, and an emptied file removes what it held. The root with its include lines can be applied the same way.
-- **Refusals**: a stale `base_hash` means the project was saved after your read, in the editor or by another session, and nothing was written. Read again and redo the change on the new text. Parse errors come with line numbers; after three failed attempts, stop and show the user the errors.
+- **One file**: to rework one block, such as a target's roadmap, read its file with `file`, edit it, and pass the same `file` to `validate_notation` and `apply_notation`. Give `apply_notation` that file's `hash` as the `base_hash`, so a save elsewhere in the project does not refuse the write. Every other file keeps what the project holds, and an emptied file removes what it held. The root with its include lines can be applied the same way.
+- **Refusals**: a stale `base_hash` means the project, or with a file's hash that file, was saved after your read, in the editor or by another session, and nothing was written. Read again and redo the change on the new text. Parse errors come with line numbers; after three failed attempts, stop and show the user the errors.
 - After a write, check the warnings in the response, then tell the user in a few lines what changed. The change shows up in the Archagram editor within seconds.
 
 For a long read, validate and apply loop on a large project in Claude Code or Cowork, hand the job to this plugin's operator agent with a complete description of the change.

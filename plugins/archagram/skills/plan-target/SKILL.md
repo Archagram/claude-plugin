@@ -15,7 +15,7 @@ Ask for what the user hasn't said: the outcome the target has to reach, the cons
 
 ## 2. Read the baseline
 
-Call `read_project_context`, then `get_project_stats` for existing targets, phases and plan progress, then `read_notation` with `sections: ["structure", "targets"]`. Call `get_notation_reference` for the form of targets, phases, plan packages and remarks.
+Call `read_project_context`, then `get_project_stats` for existing targets, phases and plan progress, then `read_notation` with `sections: ["structure", "targets"]`. Call `get_notation_reference` for the form of targets, phases, plan packages and remarks. Where the connector offers `get_guide`, read the `targets-and-roadmaps` guide as well; it is the server's current word on this job, and it wins where this skill differs.
 
 ## 3. Draft the target
 
@@ -32,9 +32,9 @@ Show the user the draft in plain words (phases, main packages, open decisions) b
 ## 4. Write it
 
 - Usually add the target block with one `apply_notation_edits` call, anchored on a line that occurs once and using the `base_hash` from your read. The server parses the result and refuses it with line-numbered errors when something is wrong, leaving the project untouched. Read the warnings it returns: an id that "is never declared" usually means a typo in a component reference.
-- To rework an existing target heavily, work on its files. A default `read_notation` lists them in `files`: `targets/<id>.ysk` holds the target's changes and `roadmaps/<id>.ysk` its remarks, phases, workstreams and plan, both as a `target "<Name>" { }` block with the same name. Read one with `file`, edit it, run `validate_notation` with `project_id` and that `file`, and call `apply_notation` with the same `file`, the edited text and that read's `base_hash`. To rename the target, use `apply_notation_edits` without `file`, which anchors in the whole notation, where the target has one header; a name changed in only one of its two files is refused.
+- To rework an existing target heavily, work on its files. A default `read_notation` lists them in `files`: `targets/<id>.ysk` holds the target's changes and `roadmaps/<id>.ysk` its remarks, phases, workstreams and plan, both as a `target "<Name>" { }` block with the same name. Read one with `file`, edit it, run `validate_notation` with `project_id` and that `file`, and call `apply_notation` with the same `file`, the edited text and that file's `hash` from `files` as the `base_hash`, so a save elsewhere in the project does not refuse the write. To rename the target, use `apply_notation_edits` without `file`, which anchors in the whole notation, where the target has one header; a name changed in only one of its two files is refused.
 - For a large plan in Claude Code or Cowork, the plugin's operator agent can run the validate and apply loop.
 
 ## 5. Report
 
-Summarize in a few lines: what the target changes, the phases with their main packages, the open decisions and remarks, and the longest chain of dependent packages. Point the user to the target's roadmap in the Archagram editor.
+Summarize in a few lines: what the target changes, the phases with their main packages, the open decisions and remarks, and the longest chain of dependent packages. Point the user to the target's roadmap in the Archagram editor. To tell an audience how the target gets built, stage by stage, offer a delivery journey inside the target, as the Journeys section of the notation reference shows.

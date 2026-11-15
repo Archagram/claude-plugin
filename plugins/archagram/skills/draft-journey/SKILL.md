@@ -20,6 +20,7 @@ A journey has one outcome, such as "A customer places an order" or "A product ch
 2. `get_project_stats` for the targets and the journeys the project already has.
 3. `read_notation` with `sections: ["structure", "targets", "processes"]`. The structure holds the components a step can name, the targets hold the components a future state adds, and the processes section holds the existing journeys. When one already tells this outcome, extend it instead of starting a second.
 4. `get_notation_reference` for the journey grammar and its complete example. Follow it rather than memory or older projects.
+5. Where the connector offers `get_guide`, read the `journeys` guide as well. It is the server's current word on this job, and it wins where this skill differs.
 
 Every step names a component that exists in the architecture, or that a target adds when the journey is told over that target. When the code shows a part the architecture lacks, ask whether to add it first, as the modeling skill describes, or to tell the journey over a target that adds it. Never invent a component for a journey.
 
@@ -78,14 +79,14 @@ Keep the story to about 5 to 15 activities, one step per handoff a reader cares 
 ## 7. Validate, apply and read back
 
 1. Read the full text with `read_notation` and `full: true`, add the journey to it, and run `validate_notation` with `project_id`. Fix every error, and the warnings that point at a mistake: a task on a component that does not exist, a reply without `(request-reply)`, `delivers` or `mapping` without a payload or a `(map)` or `(convert)` action, and a handoff between components the architecture does not connect, which usually means a missing relationship or a skipped step.
-2. Add the journey with one `apply_notation_edits` call and the `base_hash` from that read, anchored on a line that occurs once; a journey over a target is anchored on its target's header line. To rework an existing journey heavily, call `apply_notation` with the full text and that read's `base_hash`, as the modeling skill describes.
+2. Add the journey with one `apply_notation_edits` call and the `base_hash` from that read, anchored on a line that occurs once; a journey over a target is anchored on its target's header line. To rework an existing journey, read its own file, as the root's include line names it, edit it, and call `apply_notation` with the same `file` and that file's `hash` as the `base_hash`, as the modeling skill describes.
 3. Read it back with `read_notation` and `sections: ["processes"]`, and check with `list_files` that every payload and mapping the journey names exists.
 
 For a large journey in Claude Code or Cowork, the plugin's operator agent can run the validate and apply loop.
 
 ## 8. Report
 
-Give the journey's name, its steps in order with the component performing each, the payloads and mappings written, the warnings left and why, and the assumptions you made. Point the user to the journey in the Archagram editor: the Story lens walks through it, and the Technical lens shows the payloads, the actions and the mappings.
+Give the journey's name, its steps in order with the component performing each, the payloads and mappings written, the warnings left and why, and the assumptions you made. Point the user to the journey in the Archagram editor: the Story lens walks through it, and the Technical lens shows the payloads, the actions and the mappings. When people who are not technical have to picture the flow, offer its screens, which the journey-screens skill prepares.
 
 ## What leaves the machine
 

@@ -8,15 +8,17 @@ user-invocable: false
 
 Give someone new to the system a clear picture they can check against the diagram. This only reads: no write tool is needed.
 
-Tools used: `list_projects`, `read_project_context`, `get_project_stats`, `read_notation`, `read_links`, `read_file`.
+Tools used: `list_projects`, `read_project_context`, `get_project_stats`, `read_notation`, `read_links`, `read_file`, `list_investigations`, `read_investigation`, `list_datamodels`, `read_datamodel`, `list_enterprises`, `read_enterprise`, `list_enterprise_matches`.
 
 ## 1. Read
 
 1. `list_projects` to find the project; ask when the name matches more than one.
 2. `read_project_context` for the team's vocabulary and conventions.
 3. `get_project_stats` for the size, the views and the targets.
-4. `read_notation` with `sections: ["structure"]`, then the sections the question needs: `sequences` for flows, `targets` for plans and roadmaps, `adrs` for decisions. Read the full text, with `full: true`, only for a small project or a question about the whole system.
+4. `read_notation` with `sections: ["structure"]`, then the sections the question needs: `sequences` for flows, `processes` for journeys, `targets` for plans and roadmaps, `adrs` for decisions. Read the full text, with `full: true`, only for a small project or a question about the whole system.
 5. `read_links` with an `object_id` for the documents attached to a central component, and `read_file` for the documents that answer the question.
+6. For what the running system was observed to do, `list_investigations` and `read_investigation`; for the tables behind a database or the concepts of a domain, `list_datamodels` and `read_datamodel`.
+7. For a question that spans projects, start at `list_enterprises`: `read_enterprise` maps the projects of one organization and how they connect, and `list_enterprise_matches` finds where something is across them.
 
 ## 2. Explain
 
